@@ -24,10 +24,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
-              <Route
-                path="category/:categoryId/tool/:toolId"
-                element={<ToolDetail />}
-              />
+              <Route path="/tool/:id" element={<ToolDetail />} />
               <Route path="compare" element={<CompareTools />} />
               <Route path="*" element={<NotFound />} />
             </Route>

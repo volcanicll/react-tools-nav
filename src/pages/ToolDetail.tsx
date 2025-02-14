@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   Typography,
   Card,
@@ -18,15 +18,28 @@ import { toolsData } from "../data/tools";
 
 const { Title, Text } = Typography;
 
-const ToolDetail = () => {
-  const { categoryId, toolId } = useParams();
-  const category = toolsData.find((c) => c.id === categoryId);
-  const tool = category?.tools.find((t) => t.id === toolId);
+export default function ToolDetail() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  // 查找工具详情
+  const tool = toolsData
+    .flatMap((category) => category.tools)
+    .find((tool) => tool.id === id);
 
   if (!tool) {
     return (
-      <div className="nes-container">
-        <Title level={1}>工具未找到</Title>
+      <div className="nes-container" style={{ textAlign: "center" }}>
+        <Title level={2} className="nes-text is-error">
+          工具未找到
+        </Title>
+        <Button
+          type="primary"
+          className="nes-btn"
+          onClick={() => navigate("/")}
+        >
+          返回首页
+        </Button>
       </div>
     );
   }
@@ -35,8 +48,13 @@ const ToolDetail = () => {
     <div className="nes-container">
       <Space direction="vertical" size="large" style={{ width: "100%" }}>
         <Card>
-          <Title level={1}>{tool.name}</Title>
-          <Text style={{ fontSize: 18, color: "rgba(0, 0, 0, 0.65)" }}>
+          <Title level={2} className="nes-text is-primary" data-aos="fade-down">
+            {tool.name}
+          </Title>
+          <Text
+            className="nes-text"
+            style={{ fontSize: 18, color: "rgba(0, 0, 0, 0.65)" }}
+          >
             {tool.description}
           </Text>
         </Card>
@@ -119,6 +137,4 @@ const ToolDetail = () => {
       </Space>
     </div>
   );
-};
-
-export default ToolDetail;
+}

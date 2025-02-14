@@ -47,23 +47,29 @@ export default function Home() {
       <Row gutter={[24, 24]}>
         {filteredData.map((category) => (
           <Col xs={24} md={12} lg={8} key={category.id}>
-            <Link to={`/tool/${category.tools[0].id}`}>
-              <PixelCard
-                className="nes-container"
-                data-aos="zoom-in"
-                data-aos-delay={`${(parseInt(category.id) + 1) * 100}`}
-              >
-                <Title level={4} className="nes-text is-primary">
-                  {category.name}
-                </Title>
-                <Text className="nes-text">{category.description}</Text>
-                <div style={{ marginTop: 16 }}>
-                  <Tag color="success" className="nes-badge">
-                    {category.tools.length} 个工具
-                  </Tag>
-                </div>
-              </PixelCard>
-            </Link>
+            <PixelCard
+              className="nes-container"
+              data-aos="zoom-in"
+              data-aos-delay={`${(parseInt(category.id) + 1) * 100}`}
+            >
+              <Title level={4} className="nes-text is-primary">
+                {category.name}
+              </Title>
+              <Text className="nes-text">{category.description}</Text>
+              <div style={{ marginTop: 16 }}>
+                {category.tools.map((tool) => (
+                  <Link key={tool.id} to={`/tool/${tool.id}`}>
+                    <Tag
+                      color="success"
+                      className="nes-badge"
+                      style={{ marginRight: 8, marginBottom: 8 }}
+                    >
+                      {tool.name}
+                    </Tag>
+                  </Link>
+                ))}
+              </div>
+            </PixelCard>
           </Col>
         ))}
       </Row>
